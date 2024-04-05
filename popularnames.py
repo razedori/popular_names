@@ -12,7 +12,14 @@ name = st.text_input('Enter a name', value='John')
 name_df= df[df['name']==name]
 
 st.header(f'{name} Over Time')
-tab1, tab2 =st.tabs(['Female','Male'])
+selected_tab = st.radio('Select Gender', ['Female', 'Male'])
+
+if selected_tab == 'Female':
+    st.header('Female')
+    # Add content for Female tab here
+elif selected_tab == 'Male':
+    st.header('Male')
+    # Add content for Male tab here
 
 with tab1:
     plot_df=name_df[name_df['sex']=='F']
