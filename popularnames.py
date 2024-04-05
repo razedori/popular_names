@@ -11,17 +11,13 @@ name = st.text_input('Enter a name', value='John')
 name_df = df[df['name'] == name]
 
 st.header(f'{name} Over Time')
-tab1, tab2 = st.columns(2)
 
-with tab1:
-    plot_df = name_df[name_df['sex'] == 'F']
-    fig_f = px.line(plot_df, x='year', y='n')
-    st.plotly_chart(fig_f)
+sex_option = st.radio("Select Sex", ["Female", "Male"])
 
-with tab2:
-    plot_df = name_df[name_df['sex'] == 'M']
-    fig_m = px.line(plot_df, x='year', y='n')
-    st.plotly_chart(fig_m)
+plot_df = name_df[name_df['sex'] == sex_option[0]]
+
+fig = px.line(plot_df, x='year', y='n', title=f'{name} Over Time ({sex_option})', labels={'year': 'Year', 'n': 'Frequency'})
+st.plotly_chart(fig)
 
 with st.sidebar:
     year = st.slider('Choose a year', 1910, 2021)
