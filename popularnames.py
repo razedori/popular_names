@@ -12,16 +12,14 @@ name = st.text_input('Enter a name', value='John')
 name_df= df[df['name']==name]
 
 st.header(f'{name} Over Time')
-tab1, tab2 = st.columns(2)
+tab1, tab2 =st.tabs(['Female','Male'])
 
 with tab1:
-    st.header('Female')
     plot_df=name_df[name_df['sex']=='F']
     fig_f=px.line(data_frame=plot_df,x='year',y='n')
     st.plotly_chart(fig_f)
 
 with tab2:
-    st.header('Male')
     plot_df=name_df[name_df['sex']=='M']
     fig_m=px.line(data_frame=plot_df,x='year',y='n')
     st.plotly_chart(fig_m)
