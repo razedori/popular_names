@@ -15,13 +15,19 @@ tab1, tab2 = st.columns(2)
 
 with tab1:
     plot_df_female = name_df[name_df['sex'] == 'F']
-    fig_female = px.line(data_frame=plot_df_female, x='year', y='n')
-    st.plotly_chart(fig_female)
+    if not plot_df_female.empty:
+        fig_female = px.line(data_frame=plot_df_female, x='year', y='n', title=f'{name} Over Time (Female)')
+        st.plotly_chart(fig_female)
+    else:
+        st.write("No data available for female.")
 
 with tab2:
     plot_df_male = name_df[name_df['sex'] == 'M']
-    fig_male = px.line(data_frame=plot_df_male, x='year', y='n')
-    st.plotly_chart(fig_male)
+    if not plot_df_male.empty:
+        fig_male = px.line(data_frame=plot_df_male, x='year', y='n', title=f'{name} Over Time (Male)')
+        st.plotly_chart(fig_male)
+    else:
+        st.write("No data available for male.")
 
 with st.sidebar:
     year = st.slider('Choose a year', 1910, 2021)
