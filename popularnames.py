@@ -15,7 +15,7 @@ tab1, tab2 = st.columns(2)
 
 with tab1:
     plot_df = name_df[name_df['sex'] == 'F']
-    plt.plot(plot_df['year'], plot_df['n'])
+    plt.plot(plot_df['year'], plot_df['n'], marker='o')
     plt.xlabel('Year')
     plt.ylabel('Count')
     plt.title(f'{name} - Female')
@@ -23,7 +23,7 @@ with tab1:
 
 with tab2:
     plot_df = name_df[name_df['sex'] == 'M']
-    plt.plot(plot_df['year'], plot_df['n'])
+    plt.plot(plot_df['year'], plot_df['n'], marker='o')
     plt.xlabel('Year')
     plt.ylabel('Count')
     plt.title(f'{name} - Male')
