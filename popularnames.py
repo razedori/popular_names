@@ -1,6 +1,6 @@
+import plotly.express as px
 import pandas as pd
 import streamlit as st
-import matplotlib.pyplot as plt
 
 st.title('Popular Name Trends')
 
@@ -11,19 +11,17 @@ name = st.text_input('Enter a name', value='John')
 name_df = df[df['name'] == name]
 
 st.header(f'{name} Over Time')
+tab1, tab2 = st.columns(2)
 
-# Add radio buttons to choose between female and male plots
-gender = st.radio("Select gender:", ('Female', 'Male'))
+with tab1:
+    plot_df = name_df[name_df['sex'] == 'F']
+    fig_f = px.line(data_frame=plot_df, x='year', y='n')
+    st.plotly_chart(fig_f)
 
-# Filter the dataframe based on the selected gender
-plot_df = name_df[name_df['sex'] == gender[0].upper()]  # Convert to uppercase for comparison
-
-# Plot using matplotlib
-plt.plot(plot_df['year'], plot_df['n'], marker='o')
-plt.xlabel('Year')
-plt.ylabel('Count')
-plt.title(f'{name} - {gender}')
-st.pyplot()
+with tab2:
+    plot_df = name_df[name_df['sex'] == 'M']
+    fig_m = px.line(data_frame=plot_df, x='year', y='n')
+    st.plotly_chart(fig_m)
 
 with st.sidebar:
     year = st.slider('Choose a year', 1910, 2021)
@@ -38,3 +36,9 @@ with st.sidebar:
     top_names.columns = ['Girls', 'Boys']
     top_names.index = [1, 2, 3, 4, 5]
     st.dataframe(top_names)
+
+# name_df=name_df.groupby('year')['n'].sum().reset_index()
+
+# This part seems redundant since name_df was already used for plotting above.
+# If you intended to create a plot for the entire dataset, you can uncomment and correct it.
+# fig = px.line(data_frame=df, x='year', y='n')
