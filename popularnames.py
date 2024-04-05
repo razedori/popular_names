@@ -2,6 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 
+# Disable the PyplotGlobalUseWarning
+st.set_option('deprecation.showPyplotGlobalUse', False)
+
 st.title('Popular Name Trends')
 
 url = "https://github.com/esnt/Data/raw/main/Names/popular_names.csv"
@@ -12,23 +15,23 @@ name_df = df[df['name'] == name]
 
 selected_sex = st.selectbox('Select Sex', ['Female', 'Male'])
 
-fig, ax = plt.subplots()  # Create a figure and axis object
-
 if selected_sex == 'Female':
     plot_df = name_df[name_df['sex'] == 'F']
+    fig, ax = plt.subplots()  # Create a new figure and axis
     ax.plot(plot_df['year'], plot_df['n'])
     ax.set_title(f'{name} Over Time (Female)')
     ax.set_xlabel('Year')
     ax.set_ylabel('Frequency')
-    st.pyplot(fig)  # Pass the figure object to st.pyplot()
+    st.pyplot(fig)  # Pass the figure to st.pyplot()
 
 elif selected_sex == 'Male':
     plot_df = name_df[name_df['sex'] == 'M']
+    fig, ax = plt.subplots()  # Create a new figure and axis
     ax.plot(plot_df['year'], plot_df['n'])
     ax.set_title(f'{name} Over Time (Male)')
     ax.set_xlabel('Year')
     ax.set_ylabel('Frequency')
-    st.pyplot(fig)  # Pass the figure object to st.pyplot()
+    st.pyplot(fig)  # Pass the figure to st.pyplot()
 
 with st.sidebar:
     year = st.slider('Choose a year', 1910, 2021)
