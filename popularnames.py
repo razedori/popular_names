@@ -1,6 +1,6 @@
-import plotly.express as px
 import pandas as pd
 import streamlit as st
+import matplotlib.pyplot as plt
 
 st.title('Popular Name Trends')
 
@@ -11,22 +11,23 @@ name = st.text_input('Enter a name', value='John')
 name_df = df[df['name'] == name]
 
 st.header(f'{name} Over Time')
+tab1, tab2 = st.columns(2)
 
-sex_option = st.radio("Select Sex", ["Female", "Male"])
-
-if sex_option == "Female":
+with tab1:
     plot_df = name_df[name_df['sex'] == 'F']
-else:
+    plt.plot(plot_df['year'], plot_df['n'])
+    plt.xlabel('Year')
+    plt.ylabel('Count')
+    plt.title(f'{name} - Female')
+    st.pyplot()
+
+with tab2:
     plot_df = name_df[name_df['sex'] == 'M']
-
-st.write(f"Filtered DataFrame length: {len(plot_df)}")
-
-if not plot_df.empty:
-    st.write(f"Plotting DataFrame: {plot_df.head()}")
-    fig = px.line(plot_df, x='year', y='n', title=f'{name} Over Time ({sex_option})', labels={'year': 'Year', 'n': 'Frequency'})
-    st.plotly_chart(fig)
-else:
-    st.write("No data available for the selected name and sex.")
+    plt.plot(plot_df['year'], plot_df['n'])
+    plt.xlabel('Year')
+    plt.ylabel('Count')
+    plt.title(f'{name} - Male')
+    st.pyplot()
 
 with st.sidebar:
     year = st.slider('Choose a year', 1910, 2021)
