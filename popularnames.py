@@ -14,10 +14,16 @@ st.header(f'{name} Over Time')
 
 sex_option = st.radio("Select Sex", ["Female", "Male"])
 
-plot_df = name_df[name_df['sex'] == sex_option[0]]
+if sex_option == "Female":
+    plot_df = name_df[name_df['sex'] == 'F']
+else:
+    plot_df = name_df[name_df['sex'] == 'M']
 
-fig = px.line(plot_df, x='year', y='n', title=f'{name} Over Time ({sex_option})', labels={'year': 'Year', 'n': 'Frequency'})
-st.plotly_chart(fig)
+if not plot_df.empty:
+    fig = px.line(plot_df, x='year', y='n', title=f'{name} Over Time ({sex_option})', labels={'year': 'Year', 'n': 'Frequency'})
+    st.plotly_chart(fig)
+else:
+    st.write("No data available for the selected name and sex.")
 
 with st.sidebar:
     year = st.slider('Choose a year', 1910, 2021)
