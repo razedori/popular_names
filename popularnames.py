@@ -18,6 +18,7 @@ gender = st.radio("Select gender:", ('Female', 'Male'))
 # Filter the dataframe based on the selected gender
 plot_df = name_df[name_df['sex'] == gender[0].upper()]  # Convert to uppercase for comparison
 
+# Plot using matplotlib
 plt.plot(plot_df['year'], plot_df['n'], marker='o')
 plt.xlabel('Year')
 plt.ylabel('Count')
