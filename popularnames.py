@@ -19,7 +19,10 @@ if sex_option == "Female":
 else:
     plot_df = name_df[name_df['sex'] == 'M']
 
+st.write(f"Filtered DataFrame length: {len(plot_df)}")
+
 if not plot_df.empty:
+    st.write(f"Plotting DataFrame: {plot_df.head()}")
     fig = px.line(plot_df, x='year', y='n', title=f'{name} Over Time ({sex_option})', labels={'year': 'Year', 'n': 'Frequency'})
     st.plotly_chart(fig)
 else:
