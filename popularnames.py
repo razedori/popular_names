@@ -16,11 +16,14 @@ st.header(f'{name} Over Time')
 gender = st.radio("Select gender:", ('Female', 'Male'))
 
 plot_df = name_df[name_df['sex'] == gender[0]]  # Selecting rows based on the first character of gender (F/M)
-plt.plot(plot_df['year'], plot_df['n'], marker='o')
-plt.xlabel('Year')
-plt.ylabel('Count')
-plt.title(f'{name} - {gender}')
-st.pyplot()
+if not plot_df.empty:
+    plt.plot(plot_df['year'], plot_df['n'], marker='o')
+    plt.xlabel('Year')
+    plt.ylabel('Count')
+    plt.title(f'{name} - {gender}')
+    st.pyplot()
+else:
+    st.write(f"No data available for {name} - {gender}")
 
 with st.sidebar:
     year = st.slider('Choose a year', 1910, 2021)
