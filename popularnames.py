@@ -11,23 +11,16 @@ name = st.text_input('Enter a name', value='John')
 name_df = df[df['name'] == name]
 
 st.header(f'{name} Over Time')
-tab1, tab2 = st.columns(2)
 
-with tab1:
-    plot_df = name_df[name_df['sex'] == 'F']
-    plt.plot(plot_df['year'], plot_df['n'], marker='o')
-    plt.xlabel('Year')
-    plt.ylabel('Count')
-    plt.title(f'{name} - Female')
-    st.pyplot()
+# Add radio buttons to choose between female and male plots
+gender = st.radio("Select gender:", ('Female', 'Male'))
 
-with tab2:
-    plot_df = name_df[name_df['sex'] == 'M']
-    plt.plot(plot_df['year'], plot_df['n'], marker='o')
-    plt.xlabel('Year')
-    plt.ylabel('Count')
-    plt.title(f'{name} - Male')
-    st.pyplot()
+plot_df = name_df[name_df['sex'] == gender[0]]  # Selecting rows based on the first character of gender (F/M)
+plt.plot(plot_df['year'], plot_df['n'], marker='o')
+plt.xlabel('Year')
+plt.ylabel('Count')
+plt.title(f'{name} - {gender}')
+st.pyplot()
 
 with st.sidebar:
     year = st.slider('Choose a year', 1910, 2021)
